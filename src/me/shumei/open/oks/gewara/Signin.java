@@ -105,9 +105,14 @@ public class Signin extends CommonData {
 				//var data = {"msg":"你今天已经领取过红包！","success":false}
 				res = Jsoup.connect(signUrl).cookies(cookies).userAgent(UA_CHROME).timeout(TIME_OUT).referrer(ajaxLoginUrl).ignoreContentType(true).method(Method.GET).execute();
 				cookies.putAll(res.cookies());
-				//System.out.println(res.body());
+				System.out.println(res.body());
 				
-				if(res.body().contains("今天已经领取"))
+				if (res.body().contains("请先绑定手机"))
+				{
+					this.resultFlag = "false";
+					this.resultStr = "请先绑定手机再领取红包！";
+				}
+				else if(res.body().contains("今天已经领取"))
 				{
 					this.resultFlag = "true";
 					this.resultStr = "你今天已经领取过红包！";
